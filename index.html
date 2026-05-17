@@ -29,6 +29,9 @@
   --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
 }
 
+ .btn-cv{
+   text-decoration: none;
+}
 .about-portrait-inner{
   width:260px;
   height:340px;
@@ -371,7 +374,7 @@ footer { background: var(--ink); padding: 60px; }
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-right">
-    <a href="#" class="btn-cv" onclick="downloadCV(event)">Download CV</a>
+    <a href="./assets/pdf/Unis ali - CV.pdf" class="btn-cv" >Download CV</a>
     <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">◑</button>
     <div class="ham" id="ham" onclick="toggleMob()">
       <span></span><span></span><span></span>
@@ -732,6 +735,10 @@ footer { background: var(--ink); padding: 60px; }
           <div class="cd-icon">◇</div>
           <div><div class="cd-label">Email</div><div class="cd-val"><a href="mailto:yoonusk978@gmail.com" style="color:inherit;text-decoration:none">yoonusk978@gmail.com</a></div></div>
         </div>
+        <div class="contact-detail">
+          <div class="cd-icon">◇</div>
+          <div><div class="cd-label">LinkedIn</div><div class="cd-val"><a href="https://www.linkedin.com/in/unis-ali-910881179/" style="color:inherit;text-decoration:none">www.linkedin.com/in/unis-ali-910881179</a></div></div>
+        </div>
         <div class="license-row" style="margin-top:32px">
           <div class="lic-badge">UAE License</div>
           <div class="lic-badge">Bahrain License</div>
@@ -740,18 +747,7 @@ footer { background: var(--ink); padding: 60px; }
           <span>Abu Dhabi, UAE · Map Embed</span>
         </div>
       </div>
-      <div class="rv rv-d2">
-        <div class="contact-form">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin-bottom:1px">
-            <div class="cf-wrap"><div class="cf-label">First Name</div><input class="cf-input" type="text" placeholder="Your name"></div>
-            <div class="cf-wrap"><div class="cf-label">Email</div><input class="cf-input" type="email" placeholder="your@email.com"></div>
-          </div>
-          <div class="cf-wrap full" style="margin-bottom:1px"><div class="cf-label">Subject</div><input class="cf-input" type="text" placeholder="Project Inquiry / Collaboration"></div>
-          <div class="cf-wrap full" style="margin-bottom:1px"><div class="cf-label">Message</div><textarea class="cf-textarea cf-input" placeholder="Tell me about your project, location, and timeline..."></textarea></div>
-          <button class="btn-send" onclick="sendMessage(event)">Send Message →</button>
-        </div>
       </div>
-    </div>
   </div>
 </section>
 
