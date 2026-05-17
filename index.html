@@ -339,9 +339,26 @@ footer { background: var(--ink); padding: 60px; }
   body { cursor: auto; }
   #cur-dot, #cur-ring { display: none; }
 }
+/* SNOW CANVAS STYLE */
+#snow-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1; /* Sits behind text/buttons, but above background grids */
+  pointer-events: none; /* Allows clicks to pass through safely */
+  opacity: 1.5;
+  transition: opacity 0.4s;
+}
+/* Subtly change snow visibility based on theme color */
+.dark #snow-canvas {
+  opacity: 0.45;
+}
 </style>
 </head>
 <body>
+<canvas id="snow-canvas"></canvas>
 
 <!-- CURSOR -->
 <div id="cur-dot"></div>
@@ -894,6 +911,83 @@ function sendMessage(e) {
   btn.style.background = 'var(--gold)';
   setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; }, 3000);
 }
+
+const canvas = document.getElementById('snow-canvas');
+const ctx = canvas.getContext('2d');
+
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+let flakes = [];
+
+// Configuration (Kept subtle for luxury aesthetic)
+const maxFlakes = 65; 
+
+function createFlakes() {
+  flakes = [];
+  for (let i = 0; i < maxFlakes; i++) {
+    flakes.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 2 + 0.5, // Small, sophisticated flake sizes (0.5px to 2.5px)
+      d: Math.random() * maxFlakes, // Density / Drift variations
+      speed: Math.random() * 0.5 + 0.2 // Slow, atmospheric descent
+    });
+  }
+}
+
+function drawFlakes() {
+  ctx.clearRect(0, 0, width, height);
+  
+  // Get dynamic color variable from body text color for perfect theme pairing
+  const flakeColor = getComputedStyle(document.body).getPropertyValue('--ink');
+  ctx.fillStyle = flakeColor;
+  ctx.globalAlpha = 0.25; // Subtle transparency
+
+  ctx.beginPath();
+  for (let i = 0; i < maxFlakes; i++) {
+    const f = flakes[i];
+    ctx.moveTo(f.x, f.y);
+    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+  }
+  ctx.fill();
+  updateFlakes();
+}
+
+function updateFlakes() {
+  for (let i = 0; i < maxFlakes; i++) {
+    const f = flakes[i];
+    
+    // Update coordinates smoothly
+    f.y += f.speed;
+    f.x += Math.sin(f.d / 10) * 0.2; // Gentle swaying motion
+
+    // Reset flake to top if it leaves the screen bounds
+    if (f.y > height) {
+      flakes[i] = { x: Math.random() * width, y: -10, r: f.r, d: f.d, speed: f.speed };
+    }
+    if (f.x > width) f.x = 0;
+    else if (f.x < 0) f.x = width;
+    
+    f.d += 0.01;
+  }
+}
+
+function animateSnow() {
+  drawFlakes();
+  requestAnimationFrame(animateSnow);
+}
+
+// Window resizing handler
+window.addEventListener('resize', () => {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+  createFlakes();
+});
+
+// Initialization
+createFlakes();
+animateSnow();
+
 </script>
 </body>
 </html>
